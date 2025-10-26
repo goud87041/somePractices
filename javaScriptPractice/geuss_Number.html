@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -66,13 +67,15 @@
       background-color: #1d4ed8;
     }
 
-    #result, #attemptsLeft {
+    #result,
+    #attemptsLeft {
       margin-top: 15px;
       font-weight: bold;
       color: #111827;
     }
   </style>
 </head>
+
 <body>
   <div class="container">
     <h1>Guess the Number Game</h1>
@@ -90,55 +93,78 @@
 
 <script>
 
-    const ans = Math.floor(Math.random()*100)
-    const user_guess = document.getElementsByTagName("input")[0]
-    const submit_button = document.getElementsByTagName("button")[0]
-    var result = document.getElementById("result")
-    console.log(result);
+  const ans = Math.floor(Math.random() * 100)
+  const user_guess = document.getElementsByTagName("input")[0]
+  const submit_button = document.getElementsByTagName("button")[0]
+  let result = document.getElementById("result")
+  const left_attempts = document.querySelector("#attemptsLeft")
+  let attempts = 10
+  console.log(result);
 
-    console.log(ans);
-    
-    
+  console.log(ans);
 
-    submit_button.addEventListener("click",
-         function(){
-            // console.log("inside the function");
-            
-            const Enter_val = Number(user_guess.value)
-            // console.log(Enter_val);
-            
-            if(!Number.isInteger(Enter_val)){
-                console.log("inside the if condition");
-                  result.innerText = "enter and integer number"
-                result.style.color = "red"
 
-                
-            }else{
-                console.log(" i am inside the else");
 
-                    if(Number(ans)==Number(Enter_val)){
-                    result.innerText = "you are geuss correct Number"
-                    result.style.color = "green"
-                    }else if(Number(ans)<Number(Enter_val)){
-                    result.innerText = "you are geuss grater Number"
-                    result.style.color = "green"
-                    }else{
-                    result.innerText = "you are geuss small Number"
-                    result.style.color = "green"
-                    }
-                
-                
-              
-            }
+  submit_button.addEventListener("click",
+    function () {
+      // console.log("inside the function");
 
-        // console.log(user_guess.target.value)
-         } 
-    ) 
+      const Enter_val = Number(user_guess.value)
+      // console.log(Enter_val);
+     if (user_guess.value.trim() === "") { // trim removes spaces
+    result.innerText = "Enter a number";
+    result.style.color = "red";
+    return;
+}
 
-    // checkingForNum(ans,user_guess)
-    
+      if (!Number.isInteger(Enter_val)) {
+        console.log("inside the if condition");
+        result.innerText = "enter and integer number"
+        result.style.color = "red"
+
+
+      } else {
+        attempts--
+        if (attempts > 0) {
+
+          if (Number(ans) == Number(Enter_val)) {
+            result.innerText = "you are geuss correct Number"
+            result.style.color = "green"
+          } else if (Number(ans) < Number(Enter_val)) {
+            result.innerText = "you are geuss grater Number"
+            result.style.color = "green"
+          } else {
+            result.innerText = "you are geuss small Number"
+            result.style.color = "green"
+          }
+        }
+        else {
+          result.innerText = "you lose"
+          result.style.color = "red"
+          submit_button.disabled = true
+          submit_button.style.backgroundColor = "red"
+          submit_button.innerText = "you have to restart the game"
+        }
+        left_attempts.innerText = `Attempts left : ${attempts}`
+
+        // console.log(" i am inside the else");
+
+
+
+
+
+
+      }
+
+      // console.log(user_guess.target.value)
+    }
+  )
+
+  // checkingForNum(ans,user_guess)
+
 
 
 
 </script>
+
 </html>
